@@ -1,9 +1,9 @@
-import heroGrid from "../hero-grid.png";
+import heroGrid from "../../public/img/hero-grid.png";
 
 export default function Hero() {
     return (
         <>
-            <div className="container mx-auto">
+            <div className="container mx-auto px-4">
                 <div className="w-2/3 mx-auto mt-8 mb-12">
                     <img src={heroGrid} alt="hero-grid" className="w-full" />
                 </div>
