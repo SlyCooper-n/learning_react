@@ -23,7 +23,7 @@ export default function Info() {
         github.com/slycooper-n
       </a>
 
-      <div className="w-full flex justify-center">
+      <div className="w-3/4 flex justify-between">
         <Buttons theme="secondary" href="mailto:gabrielvitor.frasao@gmail.com">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -66,26 +66,29 @@ function Buttons({ theme, href, children }) {
       break;
 
     case "secondary":
-      color = "bg-slate-100";
+      color = "bg-slate-200";
       textColor = "text-black";
       break;
   }
 
-  textColor = textColor ?? "text-slate-100";
+  textColor = textColor ?? "text-slate-50";
 
   return (
     <>
       <a
         href={href}
         target="_blank"
-        className={`mt-4 mb-6 mx-2 py-1 flex justify-center ${color} ${textColor} rounded-md`}
+        className={`mt-4 mb-8 py-1 flex justify-center ${color} ${textColor} rounded-md`}
       >
         {children}
       </a>
 
       <style jsx>{`
         a.mt-4 {
-          width: 40%;
+          flex: 1;
+        }
+        a.mt-4:nth-child(1) {
+          margin-right: 5px;
         }
       `}</style>
     </>
