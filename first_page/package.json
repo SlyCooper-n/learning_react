@@ -5,8 +5,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "preview": "vite preview",
-        "gits": "git switch main && git merge secondary && git push && git switch secondary"
+        "preview": "vite preview"
     },
     "dependencies": {
         "react": "^18.0.0",
