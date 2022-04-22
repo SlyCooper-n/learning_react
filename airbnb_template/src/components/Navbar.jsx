@@ -1,6 +1,6 @@
 export default function Navbar() {
     return (
-        <nav className="px-6 py-4 shadow-md">
+        <nav className="px-6 py-4 flex justify-between items-center shadow-md">
             <svg
                 viewBox="0 0 83 26"
                 fill="none"
@@ -19,6 +19,8 @@ export default function Navbar() {
                     </clipPath>
                 </defs>
             </svg>
+
+            <h2 className="font-semibold">React Course - Project 2</h2>
         </nav>
     );
 }
