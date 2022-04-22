@@ -5,6 +5,14 @@ export default function Card({ data, mLeft }) {
     //     margin = "ml-8";
     // }
 
+    let currentValue;
+
+    if (data.openSpots === 0) {
+        currentValue = "SOLD OUT";
+    } else if (data.location == "Online") {
+        currentValue = data.location;
+    }
+
     return (
         <>
             <div className={`relative mr-12`}>
@@ -15,9 +23,11 @@ export default function Card({ data, mLeft }) {
                         className="w-full"
                     />
 
-                    <div className="absolute top-2 left-2 px-2 py-1 bg-slate-100 rounded-md z-10">
-                        SOLD OUT
-                    </div>
+                    {currentValue && (
+                        <div className="absolute top-2 left-2 px-2 py-1 bg-slate-100 rounded-md z-10">
+                            {currentValue}
+                        </div>
+                    )}
                 </div>
 
                 <p className="flex items-center">
