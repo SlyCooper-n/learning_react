@@ -1,21 +1,39 @@
-import { useState } from "react";
-import memeData from "../memeData";
+import { useEffect, useState } from "react";
 
 export default function Meme() {
     const [meme, setMeme] = useState({
             topText: "",
             bottomText: "",
             randomImg: "",
+            name: "",
         }),
-        [allMemeData, setAllMemeData] = useState(memeData);
+        [allMemes, setAllMemes] = useState([]);
+
+    useEffect(() => {
+        fetch("https://api.imgflip.com/get_memes")
+            .then((res) => res.json())
+            .then((res) => {
+                setAllMemes(res.data.memes);
+            });
+    }, []);
+
+    function handleChange(event) {
+        const { name, value } = event.target;
+
+        setMeme((prevMeme) => ({
+            ...prevMeme,
+            [name]: value,
+        }));
+    }
 
     function getMeme() {
-        const num = Math.floor(Math.random() * memeData.data.memes.length),
-            { url } = memeData.data.memes[num];
+        const num = Math.floor(Math.random() * allMemes.length),
+            { url, name } = allMemes[num];
 
         setMeme((prevMeme) => ({
             ...prevMeme,
             randomImg: url,
+            name: name,
         }));
     }
 
@@ -25,11 +43,17 @@ export default function Meme() {
                 <input
                     type="text"
                     placeholder="Top text"
+                    name="topText"
+                    value={meme.topText}
+                    onChange={handleChange}
                     className="p-2 border border-neutral-300 rounded-sm"
                 />
                 <input
                     type="text"
                     placeholder="Bottom text"
+                    name="bottomText"
+                    value={meme.bottomText}
+                    onChange={handleChange}
                     className="p-2 border border-neutral-300 rounded-sm"
                 />
 
@@ -41,7 +65,17 @@ export default function Meme() {
                 </button>
             </div>
 
-            <img src={meme.randomImg} alt="alg" className="mx-auto" />
+            <div className="relative">
+                <h2 className="absolute text-5xl text-slate-100 font-semibold top-2 left-1/2 -translate-x-1/2">
+                    {meme.topText.toUpperCase()}
+                </h2>
+
+                <img src={meme.randomImg} alt={meme.name} className="mx-auto" />
+
+                <h2 className="absolute text-5xl text-slate-100 font-semibold bottom-2 left-1/2 -translate-x-1/2">
+                    {meme.bottomText.toUpperCase()}
+                </h2>
+            </div>
         </main>
     );
 }
