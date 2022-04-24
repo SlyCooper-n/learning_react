@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "./components/Sidebar";
 import Editor from "./components/Editor";
 import { data } from "./data";
@@ -6,10 +6,16 @@ import Split from "react-split";
 import { nanoid } from "nanoid";
 
 export default function App() {
-    const [notes, setNotes] = useState([]);
+    const [notes, setNotes] = useState(
+        () => JSON.parse(localStorage.getItem("notes")) || []
+    );
     const [currentNoteId, setCurrentNoteId] = useState(
         (notes[0] && notes[0].id) || ""
     );
+
+    useEffect(() => {
+        localStorage.setItem("notes", JSON.stringify(notes));
+    }, [notes]);
 
     function createNewNote() {
         const newNote = {
@@ -41,11 +47,7 @@ export default function App() {
     return (
         <main>
             {notes.length > 0 ? (
-                <Split
-                    sizes={[30, 70]}
-                    direction="horizontal"
-                    className="split"
-                >
+                <Split sizes={[30, 70]} direction="horizontal" className="flex">
                     <Sidebar
                         notes={notes}
                         currentNote={findCurrentNote()}
@@ -60,9 +62,13 @@ export default function App() {
                     )}
                 </Split>
             ) : (
-                <div className="no-notes">
+                <div className="w-full h-screen flex flex-col justify-center items-center bg-slate-100">
                     <h1>You have no notes</h1>
-                    <button className="first-note" onClick={createNewNote}>
+
+                    <button
+                        className="p-4 bg-slate-700 rounded-sm text-slate-100 cursor-pointer"
+                        onClick={createNewNote}
+                    >
                         Create one now
                     </button>
                 </div>
