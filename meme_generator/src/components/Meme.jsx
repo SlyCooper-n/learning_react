@@ -75,6 +75,12 @@ export default function Meme() {
                 <h2 className="absolute text-5xl text-slate-100 font-semibold bottom-2 left-1/2 -translate-x-1/2">
                     {meme.bottomText.toUpperCase()}
                 </h2>
+
+                <style jsx>{`
+                    h2.absolute {
+                        -webkit-text-stroke: 2px black;
+                    }
+                `}</style>
             </div>
         </main>
     );
