@@ -1,37 +1,7 @@
-* {
-    font-family: "Karla", sans-serif;
-}
-
-/* .ql-editor p,
-.ql-editor.ql-blank::before {
-    font-size: 1.3em;
-    font-weight: 100;
-} */
-
 .editor {
     width: 80%;
     height: calc(100vh - 20px);
 }
-
-/* .title--delete {
-    display: block;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-} */
-
-/* .title:hover .title--delete {
-    display: block;
-} */
-
-/* .note-summary:not(:last-of-type) {
-    border-bottom: 1px solid lightgray;
-} */
-
-/* .selected-note .text-snippet {
-    color: white;
-    font-weight: 700;
-} */
 
 .gutter {
     background-color: #eee;
@@ -95,6 +65,30 @@
     border-radius: 5px;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+//     font-weight: bold;
+// }
+
+// h1 {
+//     font-size: 4rem;
+// }
+// h2 {
+//     font-size: 3rem;
+// }
+// h3 {
+//     font-size: 2.5rem;
+// }
+// h4 {
+//     font-size: 2rem;
+// }
+// h5 {
+//     font-size: 1.5rem;
+// }
+// h6 {
+//     font-size: 1rem;
+// }
