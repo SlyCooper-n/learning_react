@@ -5,11 +5,13 @@ export default function Header(props) {
     return (
         <>
             <header
-                className={`px-8 py-4 md:py-0 flex justify-between items-center`}
+                className={`px-8 py-4 md:py-0 flex flex-col sm:flex-row justify-between items-center ${
+                    !props.theme && "shadow-lg"
+                } z-10`}
                 style={
                     props.theme
                         ? { background: "#21222a" }
-                        : { background: "#fff", boxShadow: "0px 5px 5px #000" }
+                        : { background: "#fff" }
                 }
             >
                 <nav className="h-28 flex-1 flex flex-wrap justify-between items-center">
