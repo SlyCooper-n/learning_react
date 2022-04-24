@@ -1,7 +1,14 @@
-export default function MainContent() {
+export default function MainContent(props) {
     return (
         <>
-            <main className="relative flex-1">
+            <main
+                className="relative flex-1"
+                style={
+                    props.theme
+                        ? { background: "#282d35" }
+                        : { background: "#fff" }
+                }
+            >
                 <div className="container mx-auto px-2 py-32">
                     <h1 className="mb-16 text-5xl md:text-7xl font-bold">
                         Fun facts about React
@@ -24,10 +31,6 @@ export default function MainContent() {
             </main>
 
             <style jsx>{`
-                main {
-                    background: #282d35;
-                }
-
                 li::marker {
                     color: rgb(125, 211, 252);
                     font-size: 2.2rem;
