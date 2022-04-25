@@ -1,2 +1,20 @@
 @import "normalize";
 @import "base";
+
+html,
+body,
+#root {
+    min-height: 100vh;
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(51 65 85);
+}
+
+main {
+    width: 95vw;
+    max-width: 800px;
+}
