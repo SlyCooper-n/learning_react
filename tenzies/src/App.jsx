@@ -9,30 +9,41 @@ function App() {
         let newArr = [];
 
         for (let i = 0; i < 12; i++) {
+            let heldValue;
+            if (diceNumbers[i].isHeld) {
+                heldValue = diceNumbers[i].value;
+            }
+
             newArr.push({
                 id: nanoid(),
-                value: Math.ceil(Math.random() * 6),
-                isHeld: false,
+                value: heldValue ?? Math.ceil(Math.random() * 6),
+                isHeld: diceNumbers[i].isHeld || false,
             });
         }
+
+        // diceNumbers.map(die => {
+        //     return die.isHeld == true ? {...die, value: }
+        // });
 
         return newArr;
     }
 
+    function holdDie(id) {
+        setDiceNumbers(
+            diceNumbers.map((die) => {
+                return die.id == id
+                    ? {
+                          ...die,
+                          value: die.value,
+                          isHeld: !die.isHeld,
+                      }
+                    : die;
+            })
+        );
+    }
+
     const diceElements = diceNumbers.map((num) => (
-        <Die
-            key={num.id}
-            number={num}
-            onClick={(id) => {
-                setDiceNumbers((prevDiceNumbers) => {
-                    return diceNumbers.map((dice) => {
-                        return dice.id == id
-                            ? { ...prevDiceNumbers, isHeld: !dice.isHeld }
-                            : dice;
-                    });
-                });
-            }}
-        />
+        <Die key={num.id} number={num} onClick={holdDie} />
     ));
 
     return (
