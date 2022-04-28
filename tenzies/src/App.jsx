@@ -13,8 +13,7 @@ function App() {
 
     useEffect(() => {
         // initializes the start time
-        const date = new Date().getTime();
-        localStorage.setItem("startTime", date);
+        localStorage.setItem("startTime", new Date().getTime());
     }, []);
 
     useEffect(() => {
@@ -63,7 +62,7 @@ function App() {
     function rollDice() {
         if (tenzies) {
             setTenzies(false);
-            localStorage.setItem("startTime", newDate().getTime());
+            localStorage.setItem("startTime", new Date().getTime());
             setTurn(0);
             setDiceNumbers(() => allNewDice());
             return;
