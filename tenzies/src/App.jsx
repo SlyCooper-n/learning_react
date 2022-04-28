@@ -4,7 +4,19 @@ import Die from "./components/Die";
 
 function App() {
     const [diceNumbers, setDiceNumbers] = useState(() => allNewDice()),
-        [tenzies, setTenzies] = useState(false);
+        [tenzies, setTenzies] = useState(false),
+        [turn, setTurn] = useState(0);
+
+    useEffect(() => {
+        localStorage.setItem("startTime", new Date().getTime());
+    }, []);
+
+    useEffect(() => {
+        const endTime = new Date().getTime();
+        const startTime = localStorage.getItem("startTime");
+        const time = ((endTime - startTime) / 1000).toFixed(2);
+        console.log(time);
+    }, [tenzies]);
 
     useEffect(() => {
         let num = diceNumbers[0].value;
@@ -35,10 +47,14 @@ function App() {
 
     function rollDice() {
         if (tenzies) {
+            setTenzies(false);
+            localStorage.setItem("startTime", newDate().getTime());
+            setTurn(0);
             setDiceNumbers(() => allNewDice());
             return;
         }
 
+        setTurn((prevTurn) => ++prevTurn);
         setDiceNumbers((prevDiceNumbers) =>
             prevDiceNumbers.map((die) => {
                 return die.isHeld ? die : generateNewDie();
@@ -65,33 +81,43 @@ function App() {
     ));
 
     return (
-        <>
-            <main className="mx-auto p-8 text-center bg-slate-200 rounded-md">
-                <h1 className="mb-4 text-5xl font-bold text-slate-800">
-                    Tenzies
-                </h1>
-                <p className="w-3/4 mx-auto text-xl font-semibold text-slate-600">
-                    Roll until all dice are the same. Click each die to freeze
-                    it at its current value between rolls.
-                </p>
-                <div className="my-4 flex justify-center items-center">
-                    <div className="p-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-7">
-                        {diceElements}
-                    </div>
+        <main className="mx-auto p-8 text-center bg-slate-200 rounded-md">
+            <h1 className="mb-4 text-5xl font-bold text-slate-800">Tenzies</h1>
+
+            <p className="w-3/4 mx-auto text-xl font-semibold text-slate-600">
+                Roll until all dice are the same. Click each die to freeze it at
+                its current value between rolls.
+            </p>
+
+            <div className="my-4 flex justify-center items-center">
+                <div className="p-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-7">
+                    {diceElements}
                 </div>
-                <button
-                    onClick={rollDice}
-                    className="px-10 py-3 bg-blue-900 text-slate-100 text-xl font-semibold rounded-md"
-                >
-                    {tenzies ? "New game" : "Roll"}
-                </button>
-                <style jsx>{`
-                    button.px-10:active {
-                        box-shadow: 1px 1px 10px #0008 inset;
-                    }
-                `}</style>
-            </main>
-        </>
+            </div>
+
+            {turn != 0 && !tenzies ? (
+                <span className="block mb-8 font-semibold">
+                    {turn} {turn == 1 ? "Roll" : "Rolls"}
+                </span>
+            ) : (
+                <span className="block mb-8 font-semibold">
+                    You won in {turn} Rolls
+                </span>
+            )}
+
+            <button
+                onClick={rollDice}
+                className="px-10 py-3 bg-blue-900 text-slate-100 text-xl font-semibold rounded-md"
+            >
+                {tenzies ? "New game" : "Roll"}
+            </button>
+
+            <style jsx>{`
+                button.px-10:active {
+                    box-shadow: 1px 1px 10px #0008 inset;
+                }
+            `}</style>
+        </main>
     );
 }
 
