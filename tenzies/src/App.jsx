@@ -13,7 +13,8 @@ function App() {
 
     useEffect(() => {
         // initializes the start time
-        localStorage.setItem("startTime", new Date().getTime());
+        const date = new Date().getTime();
+        localStorage.setItem("startTime", date);
     }, []);
 
     useEffect(() => {
