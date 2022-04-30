@@ -92,7 +92,6 @@ export default function Questions() {
 
         setIsCorrect(
             userAnswers.map((ans, i) => {
-                console.log(ans[0].text, questionsData[i].correct_answer);
                 if (ans[0].text == questionsData[i].correct_answer) {
                     return true;
                 }
@@ -149,7 +148,7 @@ export default function Questions() {
 
     return (
         <>
-            <div className="absolute w-full h-full top-0 right-0 z-0">
+            <div className="fixed top-0 right-0 bottom-0 left-0 z-0">
                 <img src={blob} alt="blob" className="absolute top-0 right-0" />
                 <img
                     src={blobs}
@@ -183,7 +182,7 @@ export default function Questions() {
                     `}</style>
                 </div>
             ) : (
-                <main className="questions-container relative flex flex-col justify-center items-center z-10">
+                <main className="questions-container relative py-12 flex flex-col justify-center items-center z-10">
                     <div className="w-5/6 mx-auto">
                         {questionsData.map((ques, i) => {
                             return (
