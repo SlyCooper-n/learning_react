@@ -6,7 +6,9 @@ import blobs from "../public/img/blobs.jpg";
 export default function Questions() {
     const [questionsData, setQuestionsData] = useState([]),
         [answersData, setAnswersData] = useState([]),
-        [checkBtnDisabled, setCheckBtnDisabled] = useState(true);
+        [checkBtnDisabled, setCheckBtnDisabled] = useState(true),
+        [checked, setChecked] = useState(false),
+        [isCorrect, setIsCorrect] = useState([]);
 
     useEffect(() => {
         fetch(
@@ -53,13 +55,16 @@ export default function Questions() {
             answer.some((option) => option.selected)
         );
 
-        console.log(bool);
         if (bool) {
             setCheckBtnDisabled(false);
         }
     }, [answersData]);
 
-    function selectAnswer(id, index) {
+    function selectOption(id, index) {
+        if (checked) {
+            return;
+        }
+
         setAnswersData((prevAnswersData) =>
             prevAnswersData.map((el, i) => {
                 if (i == index) {
@@ -73,6 +78,33 @@ export default function Questions() {
                 return el;
             })
         );
+    }
+
+    function checkAnswers() {
+        if (checked) {
+            newGame();
+            return;
+        }
+
+        let userAnswers = answersData.map((ans) =>
+            ans.filter((el) => el.selected)
+        );
+
+        setIsCorrect(
+            userAnswers.map((ans, i) => {
+                console.log(ans[0].text, questionsData[i].correct_answer);
+                if (ans[0].text == questionsData[i].correct_answer) {
+                    return true;
+                }
+                return false;
+            })
+        );
+
+        setChecked(true);
+    }
+
+    function newGame() {
+        console.log("starting new game...");
     }
 
     return (
@@ -95,18 +127,31 @@ export default function Questions() {
                                 data={ques}
                                 answers={answersData[i]}
                                 indexArr={i}
-                                onClick={selectAnswer}
+                                isChecked={checked}
+                                isCorrect={isCorrect}
+                                onClick={selectOption}
                             />
                         );
                     })}
                 </div>
 
-                <button
-                    disabled={checkBtnDisabled}
-                    className="px-8 py-2 bg-indigo-700 rounded-md font-semibold text-slate-100 opacity-0 transition"
-                >
-                    Check answers
-                </button>
+                <div className="flex items-center">
+                    {checked && (
+                        <p className="mr-8 text-2xl text-indigo-900 font-semibold">
+                            You scored{" "}
+                            {isCorrect.filter((el) => el == true).length}/
+                            {questionsData.length} correct answers
+                        </p>
+                    )}
+
+                    <button
+                        disabled={checkBtnDisabled}
+                        onClick={checkAnswers}
+                        className="px-8 py-2 bg-indigo-700 rounded-md font-semibold text-slate-100 opacity-0 transition"
+                    >
+                        {checked ? "Play again" : "Check answers"}
+                    </button>
+                </div>
             </main>
 
             <style jsx>{`
@@ -130,7 +175,7 @@ export default function Questions() {
     );
 }
 
-function Question({ data, answers, indexArr, onClick }) {
+function Question({ data, answers, indexArr, isChecked, isCorrect, onClick }) {
     return (
         <>
             <h2 className="mb-6 text-2xl text-indigo-900 font-semibold">
@@ -144,10 +189,20 @@ function Question({ data, answers, indexArr, onClick }) {
                             key={nanoid()}
                             onClick={() => onClick(ans.id, indexArr)}
                             className={`mr-4 mb-4 px-4 py-1 ${
-                                ans.selected
+                                ans.selected && isChecked == false
                                     ? "bg-indigo-300 border-transparent"
                                     : ""
-                            } border-2 border-indigo-900 rounded-2xl text-indigo-900 cursor-pointer transition-all hover:bg-indigo-300 hover:border-transparent`}
+                            } ${
+                                isChecked && ans.text == data.correct_answer
+                                    ? "bg-green-400 border-green-400"
+                                    : ""
+                            } ${
+                                ans.selected &&
+                                isChecked &&
+                                isCorrect[indexArr] == false
+                                    ? "bg-red-400 border-red-400"
+                                    : ""
+                            } border-2 rounded-2xl text-indigo-900 cursor-pointer transition-all hover:bg-indigo-300 hover:border-transparent`}
                         >
                             {ans.text}
                         </li>
