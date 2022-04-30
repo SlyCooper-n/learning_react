@@ -18,7 +18,7 @@ export default function Home(props) {
             <h1 className="text-7xl font-bold">Quizzical</h1>
 
             <h2 className="my-8 text-xl font-semibold">
-                Test your programming knowledge
+                Test your technology knowledge here
             </h2>
 
             <button
