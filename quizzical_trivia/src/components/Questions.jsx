@@ -5,7 +5,8 @@ import blobs from "../public/img/blobs.jpg";
 
 export default function Questions() {
     const [questionsData, setQuestionsData] = useState([]),
-        [answersData, setAnswersData] = useState([]);
+        [answersData, setAnswersData] = useState([]),
+        [checkBtnDisabled, setCheckBtnDisabled] = useState(true);
 
     useEffect(() => {
         fetch(
@@ -46,7 +47,16 @@ export default function Questions() {
     }, []);
 
     useEffect(() => {
-        console.log("mudou");
+        // check if all questions are selected and enable the button
+        setCheckBtnDisabled(true);
+        let bool = answersData.every((answer) =>
+            answer.some((option) => option.selected)
+        );
+
+        console.log(bool);
+        if (bool) {
+            setCheckBtnDisabled(false);
+        }
     }, [answersData]);
 
     function selectAnswer(id, index) {
@@ -92,7 +102,7 @@ export default function Questions() {
                 </div>
 
                 <button
-                    disabled={true}
+                    disabled={checkBtnDisabled}
                     className="px-8 py-2 bg-indigo-700 rounded-md font-semibold text-slate-100 opacity-0 transition"
                 >
                     Check answers
