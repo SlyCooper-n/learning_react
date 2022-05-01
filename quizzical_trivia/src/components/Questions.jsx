@@ -20,15 +20,6 @@ export default function Questions() {
                 data.results.forEach((el) => {
                     // organizing the answers array
                     // to put correct and incorrect answers together and randomly sorted
-
-                    let str = el.question;
-                    str.replaceAll("&quot;", '"')
-                        .replaceAll("&#039;", "'")
-                        .replaceAll("&gt;", ">")
-                        .replaceAll("&lt;", "<");
-
-                    el.question = str;
-
                     let answers = el.incorrect_answers,
                         num = Math.floor(
                             Math.random() * (el.incorrect_answers.length + 1)
