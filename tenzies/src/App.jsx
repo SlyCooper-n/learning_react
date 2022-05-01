@@ -32,7 +32,7 @@ function App() {
     }, [tenzies]);
 
     useEffect(() => {
-        // checks if the game is finished
+        // checks if the game is over
         let num = diceNumbers[0].value;
         let bool = diceNumbers.every((die) => die.isHeld && die.value == num);
 
