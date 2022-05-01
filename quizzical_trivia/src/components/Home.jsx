@@ -43,8 +43,6 @@ export default function Home(props) {
             type ? `&type=${type}` : ""
         }`;
 
-        console.log(formData);
-
         sessionStorage.setItem("reqURL", requestURL);
         props.onClick();
     }

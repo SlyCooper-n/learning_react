@@ -207,7 +207,7 @@ export default function Questions({ returnHome }) {
                         <button
                             disabled={checkBtnDisabled}
                             onClick={checkAnswers}
-                            className="mr-6 px-8 py-2 bg-indigo-700 rounded-md font-semibold text-slate-100 opacity-0 transition"
+                            className="md:mr-6 mb-6 md:mb-0 px-8 py-2 bg-indigo-700 rounded-md font-semibold text-slate-100 opacity-0 transition"
                         >
                             {checked ? "Play again" : "Check answers"}
                         </button>
