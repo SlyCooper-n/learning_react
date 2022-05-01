@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import blob from "../public/img/blob5.jpg";
 import blobs from "../public/img/blobs.jpg";
 
-export default function Questions() {
+export default function Questions({ returnHome }) {
     const [questionsData, setQuestionsData] = useState([]),
         [answersData, setAnswersData] = useState([]),
         [checkBtnDisabled, setCheckBtnDisabled] = useState(true),
@@ -11,9 +11,7 @@ export default function Questions() {
         [isCorrect, setIsCorrect] = useState([]);
 
     useEffect(() => {
-        fetch(
-            "https://opentdb.com/api.php?amount=5&category=18&difficulty=medium"
-        )
+        fetch(sessionStorage.getItem("reqURL"))
             .then((res) => res.json())
             .then((data) => {
                 setAnswersData([]);
@@ -105,9 +103,7 @@ export default function Questions() {
     function newGame() {
         setQuestionsData([]);
 
-        fetch(
-            "https://opentdb.com/api.php?amount=5&category=18&difficulty=medium"
-        )
+        fetch(sessionStorage.getItem("reqURL"))
             .then((res) => res.json())
             .then((data) => {
                 setAnswersData([]);
@@ -211,9 +207,18 @@ export default function Questions() {
                         <button
                             disabled={checkBtnDisabled}
                             onClick={checkAnswers}
-                            className="px-8 py-2 bg-indigo-700 rounded-md font-semibold text-slate-100 opacity-0 transition"
+                            className="mr-6 px-8 py-2 bg-indigo-700 rounded-md font-semibold text-slate-100 opacity-0 transition"
                         >
                             {checked ? "Play again" : "Check answers"}
+                        </button>
+
+                        <button
+                            onClick={() => {
+                                returnHome();
+                            }}
+                            className="px-8 py-2 bg-indigo-700 rounded-md font-semibold text-slate-100 opacity-0 transition"
+                        >
+                            Return Home
                         </button>
                     </div>
                 </main>

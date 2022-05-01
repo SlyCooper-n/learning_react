@@ -9,7 +9,19 @@ function App() {
         setHome(false);
     }
 
-    return <>{home ? <Home onClick={startQuiz} /> : <Questions />}</>;
+    function returnHome() {
+        setHome(true);
+    }
+
+    return (
+        <>
+            {home ? (
+                <Home onClick={startQuiz} />
+            ) : (
+                <Questions returnHome={returnHome} />
+            )}
+        </>
+    );
 }
 
 export default App;
