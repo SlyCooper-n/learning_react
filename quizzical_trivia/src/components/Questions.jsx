@@ -199,9 +199,9 @@ export default function Questions() {
                         })}
                     </div>
 
-                    <div className="flex items-center">
+                    <div className="w-5/6 flex flex-col justify-center md:flex-row md:items-center">
                         {checked && (
-                            <p className="mr-8 text-2xl text-indigo-900 font-semibold">
+                            <p className="mb-6 md:mb-0 md:mr-8 text-2xl text-center text-indigo-900 font-semibold">
                                 You scored{" "}
                                 {isCorrect.filter((el) => el == true).length}/
                                 {questionsData.length} correct answers
