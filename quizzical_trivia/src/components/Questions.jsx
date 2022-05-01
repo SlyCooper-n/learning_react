@@ -20,6 +20,15 @@ export default function Questions() {
                 data.results.forEach((el) => {
                     // organizing the answers array
                     // to put correct and incorrect answers together and randomly sorted
+
+                    let str = el.question;
+                    str.replaceAll("&quot;", '"')
+                        .replaceAll("&#039;", "'")
+                        .replaceAll("&gt;", ">")
+                        .replaceAll("&lt;", "<");
+
+                    el.question = str;
+
                     let answers = el.incorrect_answers,
                         num = Math.floor(
                             Math.random() * (el.incorrect_answers.length + 1)
@@ -244,7 +253,11 @@ function Question({ data, answers, indexArr, isChecked, isCorrect, onClick }) {
     return (
         <>
             <h2 className="mb-6 text-2xl text-indigo-900 font-semibold">
-                {data.question}
+                {data.question
+                    .replaceAll("&quot;", '"')
+                    .replaceAll("&#039;", "'")
+                    .replaceAll("&gt;", ">")
+                    .replaceAll("&lt;", "<")}
             </h2>
 
             <ul className="flex flex-wrap">
@@ -269,7 +282,11 @@ function Question({ data, answers, indexArr, isChecked, isCorrect, onClick }) {
                                     : ""
                             } border-2 rounded-2xl text-indigo-900 cursor-pointer transition-all hover:bg-indigo-300 hover:border-transparent`}
                         >
-                            {ans.text}
+                            {ans.text
+                                .replaceAll("&quot;", '"')
+                                .replaceAll("&#039;", "'")
+                                .replaceAll("&gt;", ">")
+                                .replaceAll("&lt;", "<")}
                         </li>
                     );
                 })}
